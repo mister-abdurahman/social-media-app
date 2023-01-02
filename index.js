@@ -52,15 +52,24 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-// Serve static assets if in production
-// if (process.env.NODE_ENV === "production") {
-//Set static folder
-app.use(express.static("client/build"));
+// Serving the front End
+app.use(express.static(path.join(__dirname, "./client/build")));
 
-app.get("*", (_, res) => {
-  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//Set static folder
+// app.use(express.static("client/build"));
+
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./client/build/index.html"),
+    function (err) {
+      res.status(500).send(err);
+    }
+  );
 });
-// }
+
+// app.get("*", (_, res) => {
+//   res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+// });
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 3000;
