@@ -52,8 +52,21 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
+// Serve static assets if in production
+// if (process.env.NODE_ENV === "production") {
+//Set static folder
+app.use(express.static("client/build"));
+
+app.get("*", (_, res) => {
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+// }
+
 /* MONGOOSE SETUP */
-const PORT = process.env.PORT || 6001;
+const PORT = process.env.PORT || 3000;
+
+mongoose.set("strictQuery", false);
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
