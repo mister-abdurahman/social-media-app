@@ -1,0 +1,6 @@
+[build]
+
+[[redirects]]
+    to="/.cyclic/index:splat"
+    from="/*"
+    status=200 
